@@ -46,6 +46,7 @@ section{
 header {
     padding: 0;
     margin: 0;
+    width: 100%;
     background-color: rgb(149, 138, 223);
 }
 
