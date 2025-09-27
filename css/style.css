@@ -3,17 +3,42 @@
     font-size: 20px;
 }
 
-th {
-    background-color: rgb(118, 173, 228);
-}
-
 th,td{
     border: 2px solid black;
     padding: 10px;
     margin: 10px;
+    width: 300px;
+    text-align: justify;   
+}
+
+th {
+    background-color: rgb(118, 173, 228);
+    text-align: center;
+}
+
+a{
+    text-align: center;
 }
 
 .conteiner-tabla{
     display: flex;
     justify-content: center;
+}
+
+h1{
+    background-color: rgb(113, 148, 226);
+    padding: 8px;
+    border-radius: 30px;
+    font-size: 35px;
+    width: 500px ;
+    text-align: center;
+}
+
+header{
+    display: flex;
+    justify-content: center;
+}
+
+.text{
+    font-size: 27px;
 }
