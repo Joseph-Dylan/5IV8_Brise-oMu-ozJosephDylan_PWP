@@ -21,7 +21,7 @@ nav, section, footer, aside, article{
     margin: 1rem;
     border-radius: 10px;
     padding: 5px;
-    text-align: justify;
+    text-align: center;
 }
 
 article, aside{
@@ -45,7 +45,11 @@ nav{
     position: relative;
 }
 
-a{
+#img{
     position: absolute;
     left: 0;
+}
+
+#yaicon{
+    font-size: 20px;
 }

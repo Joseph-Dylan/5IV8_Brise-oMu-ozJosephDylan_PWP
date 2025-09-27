@@ -85,7 +85,10 @@ img{
     background-color: unset;
     vertical-align: middle;
     display: flex;
-    
     justify-content: center;
     padding: 5px;
+}
+
+#yaicon{
+    background-color: unset;
 }
