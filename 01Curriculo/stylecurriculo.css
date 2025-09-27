@@ -30,8 +30,12 @@ a:hover{
 }
 
 li{
-    padding: 0px 5px 0px 5px;
+    padding: 0px 5px 5px 5px;
     margin: 10px;
+}
+
+.nav-link li{
+    font-size: 20px;
 }
 
 .List-exp li{
@@ -74,4 +78,17 @@ footer{
 
 h2{
     padding: 5px 0px 0px 0px;
+}
+
+img{
+    width: 40px;
+    vertical-align: bottom;
+}
+
+#img{
+    background-color: unset;
+}
+
+#yaicon{
+    background-color: unset;
 }
