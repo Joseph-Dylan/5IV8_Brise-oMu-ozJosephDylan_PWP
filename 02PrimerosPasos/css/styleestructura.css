@@ -33,3 +33,19 @@ article, aside{
 nav, footer, section{
     background-color: darkgray;
 }
+
+img{
+    width: 30px;
+}
+
+nav{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+a{
+    position: absolute;
+    left: 0;
+}
