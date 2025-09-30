@@ -1,0 +1,24 @@
+img{
+    width: 40px;
+}
+
+nav{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: 17px;
+}
+
+footer{
+    padding: 18px;
+}
+
+#img{
+    position: absolute;
+    left: 0;
+}
+
+input{
+    margin: 6px;
+}

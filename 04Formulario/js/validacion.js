@@ -15,66 +15,29 @@ function validar(formulario){
         formulario.nombre.focus();
         return false;
     }
-    var chekStr = formulario.nombre.value;
-    alert(chekStr)
+    
+    //funcion de expresion regular para el nombre
+    //texto texto texto
+    var a = /^[A-Za-z]+(?:\s[A-Za-z]+)*$/;
+    var txt = formulario.nombre.value;
 
-    var abcOk = "QWERTYUIOPASDFGHJKLÑZXCVBNM" + "qwertyuiopasdfghjklñzxcvbnm";
+    alert("Nombre" + (a.test(txt)? " ": " no ") + "valido");
 
-    var allValido = true;
 
-    //tenemos que comparara la cadena nombre con el abc - expresione regulares
+    //funcion de expresion regular para la edad
+    //nnn
+    var a = /^(?:[1-9][0-9]?|100)$/;
+    var txt = formulario.edad.value;
 
-    for(var i = 0; i < chekStr.length; i++){
-        var caracateres = chekStr.charAt(i);
-        for(var j = 0; j < abcOk.length; j++){
-            if(caracateres == abcOk.charAt(j)){
-                break;
-            }
-        }
-        if(j == abcOk.length){
-            allValido = false;
-            break;
-        }
-    }
-    if(!allValido){
-        alert("Escriba solo letras en el campo nombre");
-        formulario.nombre.focus();
-        return false;
-    }
+    alert("Edad" + (a.test(txt)? " ": " no ") + "valido");
 
-    var chekStr = formulario.edad.value;
-    alert(chekStr)
-
-    var abcOk = "1234567890";
-
-    var allValido = true;
-
-    //tenemos que comparara la cadena nombre con el abc - expresione regulares
-
-    for(var i = 0; i < chekStr.length; i++){
-        var caracateres = chekStr.charAt(i);
-        for(var j = 0; j < abcOk.length; j++){
-            if(caracateres == abcOk.charAt(j)){
-                break;
-            }
-        }
-        if(j == abcOk.length){
-            allValido = false;
-            break;
-        }
-    }
-    if(!allValido){
-        alert("Escriba solo digitos en el campo edad");
-        formulario.edad.focus();
-        return false;
-    }
 
     //funcion de expresion regular para email que acepte
     //texto.texto@texto.texto
-    var b = /^[^@\s]+[^@\.\s]+(\.[^@\.\s]+)+$/;
+    var a = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     var txt = formulario.correo.value;
 
-    alert("Email " + (b.test(txt)? " ": " no ") + "valido");
+    alert("Email" + (a.test(txt)? " ": " no ") + "valido");
 
-    return b.test;
+    return a.test;
 }
