@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejemplo de formulario</title>
+    <script src="./js/validacion.js" ></script>
+</head>
+
+<body>
+    <p>Todos los formularios en la web, manejan metodos para el envío de las diferentes peticiones que realiza el
+        usuario. Cpnsiderando la arquitectura cliente-servidor, el manjejo de las peticiones se hace por medio del
+        protocolo http y actualmente por https, cada petición debe de ser atendida en un tiempo de respuesta conforme al
+        modelo tcp/IP. Los métodos principales de los formularios son:
+        <li>
+            <ol>
+                Get: <h1>Este métodos se encarga de enviar la información el formulario por medio de la salida estandar
+                    (conodcida como url), del navegador, esto propicia que úedan exixisttir inyecciones de codigo
+                    realizando violaciones a ña seguridad del sistema</h1>
+            </ol>
+            <ol>
+                POST: <h1> Este metodo se encargra de enviar la información para poder registrar un cambio o un nuevo
+                    registro dentro del sistema enviandola por el método estandar pero mediante un ocultamiento, esto
+                    signififca que no es visibvle para el ususario, lo que nos ofrece un mayor grado de sguridad en el
+                    manejo de la información</h1>
+            </ol>
+        </li>
+    </p>
+    <br>
+    <p>En resumen los metodos son:
+        <li>
+            <ul>GET: sirve para enviar y realizar opéraciones de lectura o consulta</ul>
+            <ul>POST: sirve para enviar información de un recurso al servidor con el fin de registaralo</ul>
+            <ul>Delete: sirve para eliminar un recursp especifico dentro del servidor, obteniendo ima respuesta de actuaización</ul>
+            <ul>Put: sirve para almacenar la informacion de un recurso particular y concetarse al servicop para realizar la actualizacion</ul>
+            <ul>Head: sirve para regresar el codigo de respuesta de cualquier cabecera http asociada a un recurso</ul>
+        </li>
+    </p>
+
+    <div class="conteiner-form">
+        <form method="post" id="formulario" name="formulario" onsubmit="return validar(this)" action="">
+            <label for="">Nombre: </label>
+            <br>
+            <input type="text" id="nombre" name="nombre" placeholder="Ingresa aquí tu nombre">
+            <br>
+            <label for="">Edad: </label>
+            <br>
+            <input type="text" id="edad" name="edad" placeholder="Ingresa aquí tu edad">
+            <br>
+            <label for="">Email: </label>
+            <br>
+            <input type="email" id="correo" name="correo" placeholder="Ingresa aquí tu correo">
+            <br>
+            <input type="submit" name="enviar" value="Enviar Registro">
+            <br>
+            <input type="reset" name="borrar" value="Borrar Datos">
+        </form>
+    </div>
+
+</body>
+
+</html>
