@@ -17,16 +17,24 @@
                     <table class="table">
                         <tr>
                             <td>
-                                Introduce la cantidad que deseas invertir por todo un año
+                                Introduce la cantidad que deseas invertir
                             </td>
                             <td>
                                 <input type="text" name="cantidad" id="cantidadi" onkeypress="return validarn(event)">
                             </td>
                         </tr>
                         <tr>
+                            <td>
+                                Introduce el número de meses a invertir (1-18)
+                            </td>
+                            <td>
+                                <input type="number" name="meses" id="mesesi">
+                            </td>
+                        </tr>
+                        <tr>
                             <td></td>
                             <td>
-                                <input type="button" value="calcular intereses" name="enviar" onclick="interes()">
+                                <input type="button" value="calcular intereses" name="enviar" onclick="if(validarm()) interes()">
                             </td>
                         </tr>
                         <tr>

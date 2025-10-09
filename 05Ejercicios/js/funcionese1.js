@@ -7,18 +7,34 @@ function validarn(e){
     return patron.test(codigo);
 }
 
+function validarm(){
+    var meses = document.getElementById("mesesi").value;
+    mesesint = parseInt(meses);
+
+    if(mesesint >= 1 && mesesint <= 18 ){
+        alert("Numero válido");
+        return true;
+    }
+    else{
+        alert("Numero no válido");
+        return false;
+    }
+}
+
 function interes(){
     var valor = document.getElementById("cantidadi").value;
     var parseo = parseFloat(valor);
+    var meses = document.getElementById("mesesi").value;
+    mesesint = parseInt(meses);
     alert(parseo);
 
-    var interes = parseo*(0.085); //Limite a 2
+    var interes = parseFloat((parseo*(0.0805/12)).toFixed(2)); //Limite a 2 con toFixed, toFixed lo convierte a string por eso el parseFLoat
     alert(interes);
 
-    var total = parseo + interes;
+    var total = parseo + interes*mesesint;
     alert(total);
 
-    document.getElementById("saldoi").value = "$ " + total; //Limite a 2
+    document.getElementById("saldoi").value = "$ " + total; //Limite a 2, como se limita el interes al hacer la suma de total ya no pasa de 2 decimales
 }
 
 function borrar(){
