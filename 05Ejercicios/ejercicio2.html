@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 2</title>
+</head>
+<body>
+    <div class="container">
+        <form method="post" name="formulario" action="">
+            <label for="">
+                Formulario para calculo de sueldo total de un empleado con su sueldo base y comisiones por venta del 10%
+                <br>
+                <div class="containar-table">
+                    <table class="table">
+                        <tr>
+                            <td>
+                                Introduce el sueldo base del empleado
+                            </td>
+                            <td>
+                                <input type="number" name="sueldob" id="sueldob">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Introduce la venta numero 1
+                            </td>
+                            <td>
+                                <input type="number" name="venta1" id="venta1">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Introduce la venta numero 2
+                            </td>
+                            <td>
+                                <input type="number" name="venta2" id="venta2">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Introduce la venta numero 3
+                            </td>
+                            <td>
+                                <input type="number" name="venta3" id="venta3">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>
+                                <input type="button" value="calcular sueldo total" name="enviar" onclick="if(validar()) sueldot()">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Su sueldo total con las comisiones por venta es:
+                            </td>
+                            <td>
+                                <input type="text" name="sueldoc" id="sueldoco">
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </label>
+        </form>
+    </div>
+    <script src="./js/funcionese2.js"></script>
+</body>
+</html>
