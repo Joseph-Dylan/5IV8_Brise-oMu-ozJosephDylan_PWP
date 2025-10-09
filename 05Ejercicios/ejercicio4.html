@@ -6,6 +6,83 @@
     <title>Ejercicio 4</title>
 </head>
 <body>
-    
+    <div class="container">
+        <form method="post" name="formulario" action="">
+            <label for="">
+                Formulario para calculo de calificación de un alumno
+                <br>
+                <ul>
+                    <li>55% del promedio de califiaciones de los 3 pariales</li>
+                    <li>30% del examen final</li>
+                    <li>15% de trabajo final</li>
+                </ul>
+                <div class="containar-table">
+                    <table class="table">
+                        <tr>
+                            <td>
+                                Introduce la calificación del 1er parcial
+                            </td>
+                            <td>
+                                <input type="number" name="cali1" id="cali1">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Introduce la calificación del 2do parcial
+                            </td>
+                            <td>
+                                <input type="number" name="cali2" id="cali2">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Introduce la calificación del 3er parcial
+                            </td>
+                            <td>
+                                <input type="number" name="cali3" id="cali3">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Introduce la calificación del examen final
+                            </td>
+                            <td>
+                                <input type="number" name="exam" id="exam">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Introduce la calificación del trabajo final
+                            </td>
+                            <td>
+                                <input type="number" name="trabajo" id="trabajo">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>
+                                <input type="button" value="Calcular calificación final" name="enviar" onclick="if(validar()) caluclarfinal()">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                La calificación final del alumno es:
+                            </td>
+                            <td>
+                                <input type="text" name="calif" id="calif">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>
+                                <input type="button" value="Borrar datos" name="borrarb" id="borrart" onclick="borrar()">
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </label>
+        </form>
+    </div>
+    <script src="./js/funcionese4.js"></script>
 </body>
 </html>
