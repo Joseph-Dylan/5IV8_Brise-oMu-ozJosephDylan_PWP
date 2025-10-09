@@ -44,3 +44,11 @@ function sueldot(){
 
     document.getElementById("sueldoco").value = "$ " + sueldotot;
 }
+
+function borrar(){
+    document.getElementById("sueldob").value = " "
+    document.getElementById("sueldoco").value = " ";
+    document.getElementById("venta1").value = " ";
+    document.getElementById("venta2").value = " ";
+    document.getElementById("venta3").value = " ";
+}
