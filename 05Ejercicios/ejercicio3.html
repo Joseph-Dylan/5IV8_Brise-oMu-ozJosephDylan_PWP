@@ -6,6 +6,54 @@
     <title>Ejercicio 3</title>
 </head>
 <body>
-    
+    <div class="container">
+        <form method="post" name="formulario" action="">
+            <label for="">
+                Formulario para calculo de descuento del 15% en la compra de un producto
+                <br>
+                <div class="containar-table">
+                    <table class="table">
+                        <tr>
+                            <td>
+                                Introduce el nombre del producto
+                            </td>
+                            <td>
+                                <input type="text" name="nombrep" id="nombrep">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Introduce el costo del producto
+                            </td>
+                            <td>
+                                <input type="number" name="preciop" id="preciop">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>
+                                <input type="button" value="Calcular precio final" name="enviar" onclick="if(validar()) prueba()">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p id="cadena">El precio total a pagar para: ____, con precio de: $____, con un descuento del 15% es:</p>
+                            </td>
+                            <td>
+                                <input type="text" name="preciod" id="preciod">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>
+                                <input type="button" value="Borrar" name="borrarb" id="borrart" onclick="borrar()">
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </label>
+        </form>
+    </div>
+    <script src="./js/funcionese3.js"></script>
 </body>
 </html>
