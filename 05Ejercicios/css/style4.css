@@ -83,3 +83,13 @@ img{
     width: 40px;
     align-items: center;
 }
+
+footer{
+    background-color: rgb(86, 120, 190);
+    height: 40px;
+    margin-top: 20px;
+}
+
+a{
+    color: #9fd0ff;
+}
