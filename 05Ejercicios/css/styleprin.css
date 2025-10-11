@@ -68,9 +68,3 @@ a{
 a:hover{
     text-decoration: underline;
 }
-
-footer{
-    background-color: rgb(86, 120, 190);
-    height: 40px;
-    margin-top: 20px;
-}
