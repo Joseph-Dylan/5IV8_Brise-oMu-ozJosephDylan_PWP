@@ -1,0 +1,58 @@
+body{
+    background-color: rgb(118, 173, 228);
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.container{
+    width: 80%;
+    margin: auto;
+    margin-top: 20px;
+    background-color: white;
+    padding: 15px;
+    border: 2px solid rgb(86, 120, 190);
+    border-radius: 5px;
+}
+
+label{
+    font-weight: bold;
+    display: block;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.table{
+    width: 100%;
+    border-collapse: collapse;
+}
+
+td{
+    padding: 10px;
+}
+
+input[type="text"],
+input[type="number"]{
+    width: 90%;
+    padding: 5px;
+    border: 1px solid rgb(113, 148, 226);
+    border-radius: 3px;
+}
+
+#cadena{
+    font-size: 14px;
+    margin: 0;
+}
+
+input[type="button"]{
+    background-color: rgb(113, 148, 226);
+    color: white;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+input[type="button"]:hover{
+    background-color: rgb(86, 120, 190);
+}
