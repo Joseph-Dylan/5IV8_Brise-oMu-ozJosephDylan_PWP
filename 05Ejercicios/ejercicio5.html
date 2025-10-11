@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 5</title>
+</head>
+<body>
+    <div class="container">
+        <form method="post" name="formulario" action="">
+            <label for="">
+                Formulario para calculo de porcentaje de hombres y mujeres en un grupo
+                <br>
+                <div class="containar-table">
+                    <table class="table">
+                        <tr>
+                            <td>
+                                Introduce la cantidad de hombres
+                            </td>
+                            <td>
+                                <input type="number" name="hombres" id="hombres">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Introduce la cantidad de mujeres
+                            </td>
+                            <td>
+                                <input type="number" name="mujeres" id="mujeres">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>
+                                <input type="button" value="Calcular porcentaje" name="enviar" onclick="calcular()">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                El porcentaje de hombres es:
+                            </td>
+                            <td>
+                                <input type="text" name="hombrespor" id="hombrespor">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                El porcentaje de mujeres es:
+                            </td>
+                            <td>
+                                <input type="text" name="mujerespor" id="mujerespor">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>
+                                <input type="button" value="Borrar datos" name="borrarb" id="borrart" onclick="borrar()">
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </label>
+        </form>
+    </div>
+    <script src="./js/funcionese5.js"></script>
+</body>
+</html>
