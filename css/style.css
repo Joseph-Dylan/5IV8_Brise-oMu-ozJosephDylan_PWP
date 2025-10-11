@@ -1,44 +1,58 @@
-*{
-    background-color: rgb(247, 247, 247);
-    font-size: 20px;
-}
-
-th,td{
-    border: 2px solid black;
-    padding: 10px;
-    margin: 10px;
-    width: 300px;
-    text-align: justify;   
-}
-
-th {
+body{
     background-color: rgb(118, 173, 228);
-    text-align: center;
-}
-
-a{
-    text-align: center;
-}
-
-.conteiner-tabla{
-    display: flex;
-    justify-content: center;
-}
-
-h1{
-    background-color: rgb(113, 148, 226);
-    padding: 8px;
-    border-radius: 30px;
-    font-size: 35px;
-    width: 500px ;
-    text-align: center;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
 }
 
 header{
-    display: flex;
-    justify-content: center;
+    background-color: rgb(86, 120, 190);
+    color: white;
+    text-align: center;
+    padding: 10px;
 }
 
 .text{
-    font-size: 27px;
+    text-align: center;
+    font-size: 18px;
+}
+
+.conteiner-tabla{
+    width: 80%;
+    margin: auto;
+    background-color: white;
+    padding: 10px;
+    border: 2px solid rgb(86, 120, 190);
+}
+
+table{
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th{
+    background-color: rgb(113, 148, 226);
+    color: black;
+    padding: 8px;
+    border: 1px solid black;
+}
+
+td{
+    padding: 8px;
+    border: 1px solid black;
+}
+
+a{
+    text-decoration: none;
+    color: rgb(86, 120, 190);
+}
+
+a:hover{
+    text-decoration: underline;
+}
+
+footer{
+    background-color: rgb(86, 120, 190);
+    height: 40px;
+    margin-top: 20px;
 }
