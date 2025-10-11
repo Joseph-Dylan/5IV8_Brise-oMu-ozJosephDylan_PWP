@@ -51,6 +51,27 @@ input[type="button"]{
 input[type="button"]:hover{
     background-color: rgb(86, 120, 190);
 }
+
+header{
+    background-color: rgb(86, 120, 190);
+    color: white;
+    padding: 10px;
+    position: relative;
+    text-align: center;
+}
+
+header h1{
+    margin: 0;
+    font-size: 24px;
+}
+
+header a#img{
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
 img{
     width: 40px;
     align-items: center;
