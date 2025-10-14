@@ -63,7 +63,6 @@ function problema3(){
         }
     }
 
-    // Mostrar resultado
     document.getElementById("p3-output").textContent =
         palabraMax + " (" + maxUnicos + ")";
 }
