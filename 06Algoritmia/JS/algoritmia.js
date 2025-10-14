@@ -42,5 +42,28 @@ function problema2(){
 }
 
 function problema3(){
-    //tarea
+    const input = document.getElementById("p3-input").value;
+
+    if (input.trim() === "") {
+        document.getElementById("p3-output").textContent = "Por favor ingresa palabras.";
+        return;
+    }
+
+    const palabras = input.trim().split(",");
+
+    let palabraMax = "";
+    let maxUnicos = 0;
+
+    for (let palabra of palabras) {
+        const unicos = new Set(palabra.split(""));
+
+        if (unicos.size > maxUnicos) {
+            maxUnicos = unicos.size;
+            palabraMax = palabra;
+        }
+    }
+
+    // Mostrar resultado
+    document.getElementById("p3-output").textContent =
+        palabraMax + " (" + maxUnicos + ")";
 }
