@@ -13,30 +13,32 @@ function problema1(){
 }
 
 function problema2(){
-    const x1 = parseFloat(document.getElementById("p2-x1").value);
-    const x2 = parseFloat(document.getElementById("p2-x2").value);
-    const x3 = parseFloat(document.getElementById("p2-x3").value);
-    const x4 = parseFloat(document.getElementById("p2-x4").value);
-    const x5 = parseFloat(document.getElementById("p2-x5").value);
+    var p2_x1 = document.querySelector("#p2_x1").value;
+    var p2_x2 = document.querySelector("#p2_x2").value;
+    var p2_x3 = document.querySelector("#p2_x3").value;
+    var p2_x4 = document.querySelector("#p2_x4").value;
+    var p2_x5 = document.querySelector("#p2_x5").value;
+    
+    var p2_y1 = document.querySelector("#p2_y1").value;
+    var p2_y2 = document.querySelector("#p2_y2").value;
+    var p2_y3 = document.querySelector("#p2_y3").value;
+    var p2_y4 = document.querySelector("#p2_y4").value;
+    var p2_y5 = document.querySelector("#p2_y5").value;
 
-    const y1 = parseFloat(document.getElementById("p2-y1").value);
-    const y2 = parseFloat(document.getElementById("p2-y2").value);
-    const y3 = parseFloat(document.getElementById("p2-y3").value);
-    const y4 = parseFloat(document.getElementById("p2-y4").value);
-    const y5 = parseFloat(document.getElementById("p2-y5").value);
+    var v1 = [p2_x1, p2_x2, p2_x3, p2_x4, p2_x5];
+    var v2 = [p2_y1, p2_y2, p2_y3, p2_y4, p2_y5];
 
-    const xs = [x1, x2, x3, x4, x5];
-    const ys = [y1, y2, y3, y4, y5];
+    v1 = v1.sort(function(a,b){return b-a});
+    v2 = v2.sort(function(a,b){return b-a});
 
-    xs.sort((a,b) => a-b);
-    ys.sort((a,b) => b-a);
+    v2 = v2.reverse();
 
-    let productoEscalar = 0;
-    for(let i = 0; i < 5; i++){
-        productoEscalar += xs[i] * ys[i];
+    var p2_producto = 0;
+
+    for(var i=0; i < v1.length; i++){
+        p2_producto += v1[i] + v2[i];
     }
-
-    document.getElementById("p2-output").textContent = "Producto escalar mínimo: " + productoEscalar;
+    document.querySelector("#p2_producto").textContent = "El producto escalar minimo es: " + p2_producto;
 }
 
 function problema3(){
