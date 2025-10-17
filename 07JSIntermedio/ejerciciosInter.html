@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicios JS Intermedio</title>
+    <link rel="stylesheet" href="../05Ejercicios/css/style1.css">
+</head>
+<body>
+    <div class="conteiner-header">
+        <header>
+            <a href="../index.html" id="img"><img src="../01Curriculo/imgcurriculo/hogar.png" alt="home"></a>
+            <h1>Ejercicios de JavaScript intermedio</h1>
+        </header>
+    </div>
+
+    <!-- Problema 1 -->
+    <div class="container">
+        <div class="problema-container">
+            <h2 class="problema-title">Problema 1</h2>
+                <ul>
+                    <li>Si son iguales, multiplicarlos</li>
+                    <li>Si el primero es mayor, restarlos</li>
+                    <li>Si es menor, sumarlos</li>
+                </ul>
+            <div class="problema-content">
+                <input type="number" class="problema-input" placeholder="Número 1" id="p1-n1">
+                <input type="number" class="problema-input" placeholder="Número 2" id="p1-n2">
+                <button type="button" class="problema-button" onclick="problema1()">Calcular</button>
+                <pre class="problema-output" id="p1-output">Esperando datos...</pre>
+            </div>
+        </div>
+    </div>
+
+    <!-- Problema 2 -->
+    <div class="container">
+        <div class="problema-container">
+            <h2 class="problema-title">Problema 2</h2>
+            <h3>
+                Leer 3 números diferentes e imprimir el número mayor de los 3.
+            </h3>
+            <div class="problema-content">
+                <input type="number" class="problema-input" placeholder="Número 1" id="p2-n1">
+                <input type="number" class="problema-input" placeholder="Número 2" id="p2-n2">
+                <input type="number" class="problema-input" placeholder="Número 3" id="p2-n3">
+                <button type="button" class="problema-button" onclick="problema2()">Calcular</button>
+                <pre class="problema-output" id="p2-output">Esperando datos...</pre>
+            </div>
+        </div>
+    </div>
+
+    <!-- Problema 3 -->
+    <div class="container">
+        <div class="problema-container">
+            <h2 class="problema-title">Problema 3</h2>
+            <h3>
+                Calcular el pago de horas extra:
+            </h3>
+            <ul>
+                <li>Más de 40 hrs = extras  </li>
+                <li>Hasta 8 hrs extra = doble  </li>
+                <li>Más de 8 = primeras 8 doble, resto triple</li>
+            </ul>
+            <div class="problema-content">
+                <input type="number" class="problema-input" placeholder="Horas trabajadas" id="p3-horas">
+                <input type="number" class="problema-input" placeholder="Pago por hora normal" id="p3-pago">
+                <button type="button" class="problema-button" onclick="problema3()">Calcular pago</button>
+                <pre class="problema-output" id="p3-output">Esperando datos...</pre>
+            </div>
+        </div>
+    </div>
+
+    <!-- Problema 4 -->
+    <div class="container">
+        <div class="problema-container">
+            <h2 class="problema-title">Problema 4</h2>
+            <h3>
+                Calcular la utilidad anual según antigüedad:
+            </h3>
+
+            <ul>
+                <li> < 1 año = 5%  </li>
+                <li>1 a 2 años = 7%  </li>
+                <li>2 a 5 años = 10%  </li>
+                <li>5 a 10 años = 15% </li>
+                <li>> 10 años = 20%</li>
+            </ul>
+            <div class="problema-content">
+                <input type="number" class="problema-input" placeholder="Salario mensual" id="p4-salario">
+                <input type="number" class="problema-input" placeholder="Años en la empresa" id="p4-anios">
+                <button type="button" class="problema-button" onclick="problema4()">Calcular utilidad</button>
+                <pre class="problema-output" id="p4-output">Esperando datos...</pre>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <a href="https://www.flaticon.es/iconos-gratis/boton-de-inicio" title="botón de inicio iconos" id="yaicon">Botón de inicio iconos creados por yaicon - Flaticon</a>
+    </footer>
+
+    <script src="./JS/ejerciciosInter.js"></script>
+</body>
+</html>
