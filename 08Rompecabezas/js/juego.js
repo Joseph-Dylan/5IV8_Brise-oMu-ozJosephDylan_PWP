@@ -1,6 +1,6 @@
 var instrucciones = [
-    "Utiliza las flechas de navegació para mover las piezas",
-    "Para ordenar las piezas guiate por la imagen Objetivo"
+    "Utiliza las flechas de navegación para mover las piezas",
+    "Para ordenar las piezas guíate por la imagen objetivo."
 ];
 
 //guardar en una variable los movimientos del rompecabezas, luego vamos a crear una matriz para saber las posiciones del rompecabezas
@@ -43,14 +43,14 @@ function mostrarinstruccionesLista(instruccion, idLista){
 //funcon para saber que ganó
 function checarsiGano(){
     for(var i = 0; i < rompe.length; i++){
-        for(var j = 0; i < rompe[i].length; i++){
+        for(var j = 0; j < rompe[i].length; j++){
             var rompeAct = rompe[i][j];
             if(rompeAct !== rompecorrecta[i][j]){
                 return false;
             }
         }
     }
-    return false;
+    return true;
 }
 
 //mostrar que se ganó
@@ -64,11 +64,10 @@ function mostrarcarteGanador(){
 
 //función para cambiar las posiciones de las piezas
 function intercambirarPosicionesRompe(filaPos1, columnaPos1, filaPos2, columnaPos2){
-    var pos1 = rompe[filaPos1, columnaPos1];
-    var pos2 = rompe[filaPos2, columnaPos2];
-
-    rompe[filaPos1, columnaPos1] = pos2;
-    rompe[filaPos2, columnaPos2] = pos1;
+    var pos1 = rompe[filaPos1][columnaPos1];
+    var pos2 = rompe[filaPos2][columnaPos2];
+    rompe[filaPos1][columnaPos1] = pos2;
+    rompe[filaPos2][columnaPos2] = pos1;
 }
 
 
@@ -119,13 +118,13 @@ function moverEnDireccion(direccion){
         intercambirarPosiciones(filavacia, columnavacia, nuevaFilapiezaVacia, nuevaColumnapiezaVacia);
         actualizarposicionVacia(nuevaFilapiezaVacia, nuevaColumnapiezaVacia);
         //guardar el ultimo movimiento
-        agregarultimoMovimiento(direccion);
+        actualizarUltimoMovimiento(direccion);
     }
 }
 
 function intercambirarPosiciones(fila1, columna1, fila2, columna2){
-    var pieza1 = rompe[fila1, columna1];
-    var pieza2 = rompe[fila2, columna2];
+    var pieza1 = rompe[fila1][columna1];
+    var pieza2 = rompe[fila2][columna2];
 
     //inercambio debe de swe poe parte de los frames y html
     intercambirarPosicionesRompe(fila1, columna1, fila2, columna2);
@@ -167,12 +166,11 @@ function actualizarUltimoMovimiento(direccion){
 }
 
 function mezclarPiezas(veces){
-    if(veces <= 0){
-        alert("Así no se puede mezclar");
+    if(veces < 0){
         return;
     }
     var direcciones = [codigosDireccion.ABAJO, codigosDireccion.ARRIBA, codigosDireccion.DERECHA, codigosDireccion.IZQUIERDA];
-    var direccion = [Math.floor(Math.random() * direcciones.length)];
+    var direccion = direcciones[Math.floor(Math.random() * direcciones.length)];
     moverEnDireccion(direccion);
 
     setTimeout(function(){
@@ -207,11 +205,5 @@ function iniciar(){
 }
 
 iniciar();
-
-function iniciar(){
-    //mezclar las piezas
-    //capturar el ultimo movimiento
-    
-}
 
 mostrasinstrucciones(instrucciones);
