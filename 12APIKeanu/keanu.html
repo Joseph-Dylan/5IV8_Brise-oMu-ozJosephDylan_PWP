@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generador de Keanu Reeves</title>
+    <link rel="stylesheet" href="./css/keanu.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Generador de Keanu Reeves</h1>
+        <p class="subtitle">Haz click en el botón para generar una imagen aleatoria</p>
+        
+        <img id="keanuImage" src="https://placekeanu.com/500/400" alt="Keanu Reeves" class="keanu-image">
+        
+        <div>
+            <button class="generate-btn" onclick="generateRandomKeanu()">
+                Generar Nueva Imagen
+            </button>
+        </div>
+        
+        <div class="image-info" id="imageInfo">
+            Tamaño: 500x400 | Opciones: Ninguna
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>Powered by PlaceKeanu.com API</p>
+    </div>
+
+    <script src="./JS/funcioneskeanu"></script>
+</body>
+</html>

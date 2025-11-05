@@ -1,0 +1,43 @@
+function generateRandomKeanu() {
+    const image = document.getElementById('keanuImage');
+    const info = document.getElementById('imageInfo');
+    
+    image.classList.add('loading');
+    
+    const widths = [300, 400, 500, 600, 700];
+    const heights = [300, 400, 500, 600, 700];
+    const options = ['', 'y', 'g', 'yg'];
+    
+    const randomWidth = widths[Math.floor(Math.random() * widths.length)];
+    const randomHeight = heights[Math.floor(Math.random() * heights.length)];
+    const randomOption = options[Math.floor(Math.random() * options.length)];
+    
+    let url = `https://placekeanu.com/${randomWidth}/${randomHeight}`;
+    if (randomOption) {
+        url += `/${randomOption}`;
+    }
+    
+    url += `?t=${new Date().getTime()}`;
+    
+    image.src = url;
+    
+    let optionText = 'Ninguna';
+    if (randomOption === 'y') optionText = 'Joven';
+    if (randomOption === 'g') optionText = 'Gris';
+    if (randomOption === 'yg') optionText = 'Joven + Gris';
+    
+    info.textContent = `Tamaño: ${randomWidth}x${randomHeight} | Opciones: ${optionText}`;
+    
+    image.onload = function() {
+        image.classList.remove('loading');
+    };
+    
+    image.onerror = function() {
+        image.classList.remove('loading');
+        alert('Error al cargar la imagen. Intenta de nuevo.');
+    };
+}
+
+window.addEventListener('load', function() {
+    setTimeout(generateRandomKeanu, 1000);
+});
