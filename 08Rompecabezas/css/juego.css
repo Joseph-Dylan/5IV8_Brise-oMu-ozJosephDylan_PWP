@@ -177,3 +177,40 @@ li::before {
     background-image: linear-gradient(to bottom, #2079b0, #eb94d0);
     text-decoration: none;
 }
+
+
+.conteiner-header {
+    width: 100%;
+}
+
+header {
+    background-color: rgb(86, 120, 190);
+    color: white;
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+header h1 {
+    margin: 0;
+    text-align: center;
+}
+
+header a#img {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+header a#img img {
+    width: 40px;
+    align-items: center;
+    transition: transform 0.3s;
+}
+
+header a#img:hover img {
+    transform: scale(1.1);
+}
