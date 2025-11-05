@@ -214,3 +214,9 @@ header a#img img {
 header a#img:hover img {
     transform: scale(1.1);
 }
+
+footer{
+    background-color: rgb(143, 173, 232);
+    height: 40px;
+    margin-top: 20px;
+}

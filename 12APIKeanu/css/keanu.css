@@ -147,3 +147,9 @@ footer {
         max-width: 100%;
     }
 }
+
+footer{
+    background-color: rgb(143, 173, 232);
+    height: 40px;
+    margin-top: 20px;
+}
