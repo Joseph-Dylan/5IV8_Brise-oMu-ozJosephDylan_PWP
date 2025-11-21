@@ -20,10 +20,10 @@
         <button type="submit">Registrar estudiante</button>
 
         <ul>
-            <% estudiantes.forEach(function(estudiante) => { %>
+            <% estudiantes.forEach(function(estudiante) { %>
                 <li><%= estudiante.nombre %> - (Edad: <%= estudiante.edad %>, Curso: <%= estudiante.curso %>)</li>
-                <a href="/estudiantes/edit/<%= estudiantes.id %>">Editar</a>
-                <a href="/estudiantes/delete/<%= estudiantes.id %>">Eliminar</a>
+                <a href="/estudiantes/edit/<%= estudiante.id %>">Editar</a>
+                <a href="/estudiantes/delete/<%= estudiante.id %>">Eliminar</a>
             <% }); %>
         </ul>
 
