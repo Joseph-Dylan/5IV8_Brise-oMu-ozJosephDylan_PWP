@@ -1,0 +1,56 @@
+body {
+    background-color: rgb(118, 173, 228);
+    font-family: Arial, sans-serif;
+    padding: 20px;
+}
+
+h1 {
+    text-align: center;
+    color: white;
+}
+
+form {
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+input[type="text"],
+input[type="number"] {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+}
+
+button {
+    background-color: rgb(86, 120, 190);
+    color: white;
+    padding: 10px;
+    border: none;
+    width: 100%;
+}
+
+ul {
+    padding: 0;
+}
+
+li {
+    background-color: white;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+
+a {
+    color: rgb(86, 120, 190);
+    margin-right: 10px;
+}
