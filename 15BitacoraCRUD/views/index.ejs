@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Instrumentos</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <h1>Registro de Instrumento</h1>
+    <form action="/instrumentos" method="post">
+        <label for="id_instrumento">ID de Instrumento:</label>
+        <input type="text" id="id_instrumento" name="id_instrumento" required>
+
+        <label for="descripcion">Descripción:</label>
+        <input type="text" id="descripcion" name="descripcion" required>
+
+        <label for="ultima_calibracion">Última Calibración:</label>
+        <input type="datetime-local" id="ultima_calibracion" name="ultima_calibracion">
+
+        <label for="fecha_calibracion_actual">Fecha Calibración Actual:</label>
+        <input type="datetime-local" id="fecha_calibracion_actual" name="fecha_calibracion_actual">
+
+        <label for="estandar_referencia">Estándar de Referencia:</label>
+        <input type="text" id="estandar_referencia" name="estandar_referencia">
+
+        <label for="lectura_antes">Lectura Antes:</label>
+        <input type="text" id="lectura_antes" name="lectura_antes">
+
+        <label for="lectura_despues">Lectura Después:</label>
+        <input type="text" id="lectura_despues" name="lectura_despues">
+
+        <label for="certificado_asociado">Certificado Asociado:</label>
+        <input type="text" id="certificado_asociado" name="certificado_asociado">
+
+        <label for="proxima_calibracion">Próxima Calibración:</label>
+        <input type="datetime-local" id="proxima_calibracion" name="proxima_calibracion">
+
+        <button type="submit">Registrar Instrumento</button>
+    </form>
+
+    <h2>Instrumentos Registrados</h2>
+    <ul>
+        <% instrumentos.forEach(function(instrumento) { %>
+            <li>
+                <strong><%= instrumento.id_instrumento %></strong><br>
+                <strong>Descripción:</strong> <%= instrumento.descripcion %><br>
+                <strong>Última Calibración:</strong> <%= instrumento.ultima_calibracion ? new Date(instrumento.ultima_calibracion).toLocaleString('es-MX', {year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: true}) : 'N/A' %><br>
+                <strong>Fecha Actual:</strong> <%= instrumento.fecha_calibracion_actual ? new Date(instrumento.fecha_calibracion_actual).toLocaleString('es-MX', {year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: true}) : 'N/A' %><br>
+                <strong>Estándar Referencia:</strong> <%= instrumento.estandar_referencia %><br>
+                <strong>Lectura Antes:</strong> <%= instrumento.lectura_antes %><br>
+                <strong>Lectura Después:</strong> <%= instrumento.lectura_despues %><br>
+                <strong>Certificado:</strong> <%= instrumento.certificado_asociado %><br>
+                <strong>Próxima Calibración:</strong> <%= instrumento.proxima_calibracion ? new Date(instrumento.proxima_calibracion).toLocaleString('es-MX', {year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: true}) : 'N/A' %>
+                <div>
+                    <a href="/instrumentos/edit/<%= instrumento.id %>">Editar</a>
+                    <a href="/instrumentos/delete/<%= instrumento.id %>">Eliminar</a>
+                </div>
+            </li>
+        <% }); %>
+    </ul>
+</body>
+</html>

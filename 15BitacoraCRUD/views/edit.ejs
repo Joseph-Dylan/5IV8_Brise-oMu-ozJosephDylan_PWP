@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Instrumento</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <h1>Editar Instrumento</h1>
+    <form action="/instrumentos/update/<%= instrumento.id %>" method="post">
+        <label for="id_instrumento">ID de Instrumento:</label>
+        <input type="text" id="id_instrumento" name="id_instrumento" value="<%= instrumento.id_instrumento %>" required>
+
+        <label for="descripcion">Descripción:</label>
+        <input type="text" id="descripcion" name="descripcion" value="<%= instrumento.descripcion %>" required>
+
+        <label for="ultima_calibracion">Última Calibración:</label>
+        <input type="datetime-local" id="ultima_calibracion" name="ultima_calibracion" value="<%= instrumento.ultima_calibracion ? new Date(instrumento.ultima_calibracion).toISOString().slice(0,16) : '' %>">
+
+        <label for="fecha_calibracion_actual">Fecha Calibración Actual:</label>
+        <input type="datetime-local" id="fecha_calibracion_actual" name="fecha_calibracion_actual" value="<%= instrumento.fecha_calibracion_actual ? new Date(instrumento.fecha_calibracion_actual).toISOString().slice(0,16) : '' %>">
+
+        <label for="estandar_referencia">Estándar de Referencia:</label>
+        <input type="text" id="estandar_referencia" name="estandar_referencia" value="<%= instrumento.estandar_referencia %>">
+
+        <label for="lectura_antes">Lectura Antes:</label>
+        <input type="text" id="lectura_antes" name="lectura_antes" value="<%= instrumento.lectura_antes %>">
+
+        <label for="lectura_despues">Lectura Después:</label>
+        <input type="text" id="lectura_despues" name="lectura_despues" value="<%= instrumento.lectura_despues %>">
+
+        <label for="certificado_asociado">Certificado Asociado:</label>
+        <input type="text" id="certificado_asociado" name="certificado_asociado" value="<%= instrumento.certificado_asociado %>">
+
+        <label for="proxima_calibracion">Próxima Calibración:</label>
+        <input type="datetime-local" id="proxima_calibracion" name="proxima_calibracion" value="<%= instrumento.proxima_calibracion ? new Date(instrumento.proxima_calibracion).toISOString().slice(0,16) : '' %>">
+
+        <button type="submit">Actualizar Instrumento</button>
+    </form>
+</body>
+</html>
