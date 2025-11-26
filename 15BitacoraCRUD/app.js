@@ -57,12 +57,57 @@ app.post('/instrumentos', (req, res) => {
         proxima_calibracion 
     } = req.body;
 
-    if (ultima_calibracion && fecha_calibracion_actual && new Date(fecha_calibracion_actual) < new Date(ultima_calibracion)) {
-        return res.status(400).send('Error: La fecha de calibración actual no puede ser anterior a la última calibración');
+    const obligatorios = {
+        id_instrumento,
+        descripcion,
+        fecha_calibracion_actual,
+        estandar_referencia,
+        lectura_antes,
+        lectura_despues,
+        certificado_asociado,
+        proxima_calibracion
+    };
+
+    for (const campo in obligatorios) {
+        if (!obligatorios[campo] || obligatorios[campo].trim() === "") {
+            return res.status(400).send(`Error: El campo '${campo}' es obligatorio`);
+        }
+    }
+
+    if (id_instrumento.length < 4 || id_instrumento.length > 20) {
+        return res.status(400).send("El ID debe tener entre 12 y 20 caracteres");
+    }
+
+    if (descripcion.length < 5 || descripcion.length > 100) {
+        return res.status(400).send("La descripción debe tener entre 5 y 100 caracteres");
     }
     
-    if (fecha_calibracion_actual && proxima_calibracion && new Date(proxima_calibracion) <= new Date(fecha_calibracion_actual)) {
-        return res.status(400).send('Error: La próxima calibración debe ser después de la fecha actual');
+    if (estandar_referencia.length < 4 || estandar_referencia.length > 60) {
+        return res.status(400).send("El estándar de referencia debe tener entre 4 y 60 caracteres");
+    }
+
+    if (lectura_antes.length < 1 || lectura_antes.length > 10) {
+        return res.status(400).send("Lectura antes inválida");
+    }
+
+    if (lectura_despues.length < 1 || lectura_despues.length > 10) {
+        return res.status(400).send("Lectura después inválida");
+    }
+
+    if (certificado_asociado.length < 2 || certificado_asociado.length > 30) {
+        return res.status(400).send("Certificado asociado inválido");
+    }
+
+    if (ultima_calibracion &&
+        fecha_calibracion_actual &&
+        new Date(fecha_calibracion_actual) < new Date(ultima_calibracion)) {
+        return res.status(400).send('La fecha actual no puede ser anterior a la última calibración');
+    }
+
+    if (fecha_calibracion_actual &&
+        proxima_calibracion &&
+        new Date(proxima_calibracion) <= new Date(fecha_calibracion_actual)) {
+        return res.status(400).send('La próxima calibración debe ser después de la fecha actual');
     }
     
     const query = `INSERT INTO instrumentos 
@@ -123,12 +168,57 @@ app.post('/instrumentos/update/:id', (req, res) => {
         proxima_calibracion 
     } = req.body;
 
-    if (ultima_calibracion && fecha_calibracion_actual && new Date(fecha_calibracion_actual) < new Date(ultima_calibracion)) {
-        return res.status(400).send('Error: La fecha de calibración actual no puede ser anterior a la última calibración');
+    const obligatorios = {
+        id_instrumento,
+        descripcion,
+        fecha_calibracion_actual,
+        estandar_referencia,
+        lectura_antes,
+        lectura_despues,
+        certificado_asociado,
+        proxima_calibracion
+    };
+
+    for (const campo in obligatorios) {
+        if (!obligatorios[campo] || obligatorios[campo].trim() === "") {
+            return res.status(400).send(`Error: El campo '${campo}' es obligatorio`);
+        }
     }
-    
-    if (fecha_calibracion_actual && proxima_calibracion && new Date(proxima_calibracion) <= new Date(fecha_calibracion_actual)) {
-        return res.status(400).send('Error: La próxima calibración debe ser después de la fecha actual');
+
+    if (id_instrumento.length < 12 || id_instrumento.length > 20) {
+        return res.status(400).send("El ID debe tener entre 12 y 20 caracteres");
+    }
+
+    if (descripcion.length < 5 || descripcion.length > 100) {
+        return res.status(400).send("La descripción debe tener entre 5 y 100 caracteres");
+    }
+
+    if (estandar_referencia.length < 4 || estandar_referencia.length > 60) {
+        return res.status(400).send("El estándar de referencia debe tener entre 4 y 60 caracteres");
+    }
+
+    if (lectura_antes.length < 1 || lectura_antes.length > 10) {
+        return res.status(400).send("Lectura antes inválida");
+    }
+
+    if (lectura_despues.length < 1 || lectura_despues.length > 10) {
+        return res.status(400).send("Lectura después inválida");
+    }
+
+    if (certificado_asociado.length < 2 || certificado_asociado.length > 30) {
+        return res.status(400).send("Certificado asociado inválido");
+    }
+
+    if (ultima_calibracion &&
+        fecha_calibracion_actual &&
+        new Date(fecha_calibracion_actual) < new Date(ultima_calibracion)) {
+        return res.status(400).send('La fecha actual no puede ser anterior a la última calibración');
+    }
+
+    if (fecha_calibracion_actual &&
+        proxima_calibracion &&
+        new Date(proxima_calibracion) <= new Date(fecha_calibracion_actual)) {
+        return res.status(400).send('La próxima calibración debe ser después de la fecha actual');
     }
     
     const query = `UPDATE instrumentos SET 

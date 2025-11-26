@@ -10,31 +10,31 @@
     <h1>Registro de Instrumento</h1>
     <form action="/instrumentos" method="post">
         <label for="id_instrumento">ID de Instrumento:</label>
-        <input type="text" id="id_instrumento" name="id_instrumento" required>
+        <input type="text" id="id_instrumento" name="id_instrumento" minlength="4" maxlength="20" required>
 
         <label for="descripcion">Descripción:</label>
-        <input type="text" id="descripcion" name="descripcion" required>
+        <input type="text" id="descripcion" name="descripcion" minlength="5" maxlength="100" required>
 
         <label for="ultima_calibracion">Última Calibración:</label>
         <input type="datetime-local" id="ultima_calibracion" name="ultima_calibracion">
 
         <label for="fecha_calibracion_actual">Fecha Calibración Actual:</label>
-        <input type="datetime-local" id="fecha_calibracion_actual" name="fecha_calibracion_actual">
+        <input type="datetime-local" id="fecha_calibracion_actual" name="fecha_calibracion_actual" required>
 
         <label for="estandar_referencia">Estándar de Referencia:</label>
-        <input type="text" id="estandar_referencia" name="estandar_referencia">
+        <input type="text" id="estandar_referencia" minlength="4" maxlength="60"name="estandar_referencia" required>
 
         <label for="lectura_antes">Lectura Antes:</label>
-        <input type="text" id="lectura_antes" name="lectura_antes">
+        <input type="text" id="lectura_antes" minlength="1" maxlength="10" name="lectura_antes" required>
 
         <label for="lectura_despues">Lectura Después:</label>
-        <input type="text" id="lectura_despues" name="lectura_despues">
+        <input type="text" id="lectura_despues" minlength="1" maxlength="10" name="lectura_despues" required>
 
         <label for="certificado_asociado">Certificado Asociado:</label>
-        <input type="text" id="certificado_asociado" name="certificado_asociado">
+        <input type="text" id="certificado_asociado" minlength="2" maxlength="30" name="certificado_asociado" required>
 
         <label for="proxima_calibracion">Próxima Calibración:</label>
-        <input type="datetime-local" id="proxima_calibracion" name="proxima_calibracion">
+        <input type="datetime-local" id="proxima_calibracion" name="proxima_calibracion" required>
 
         <button type="submit">Registrar Instrumento</button>
     </form>
