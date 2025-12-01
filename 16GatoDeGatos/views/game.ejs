@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juego <%= game.id %> - Ultimate Tic Tac Toe</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header class="game-header">
+            <h1>Juego #<%= game.id %></h1>
+            <div class="game-info">
+                <span class="status <%= game.completed ? 'completed' : 'in-progress' %>">
+                    <%= game.completed ? 'Completado' : 'En progreso' %>
+                </span>
+                <% if (game.winner) { %>
+                    <span class="winner">Ganador: <%= game.winner %></span>
+                <% } %>
+            </div>
+            <a href="/" class="btn btn-secondary">Volver a Inicio</a>
+        </header>
+
+        <div class="game-info">
+            <span class="status <%= game.completed ? 'completed' : 'in-progress' %>">
+                <%= game.completed ? 'Completado' : 'En progreso' %>
+            </span>
+            <% if (game.winner) { %>
+                <span class="winner winner-<%= game.winner.toLowerCase() %>">
+                    Ganador: <%= game.winner %>
+                </span>
+            <% } %>
+        </div>
+
+        <div id="ultimate-board" class="ultimate-board"
+             data-game-id="<%= game.id %>"
+             data-completed="<%= game.completed %>"
+             data-winner="<%= game.winner || '' %>"
+             data-moves='<%- JSON.stringify(moves) %>'
+             data-sub-games='<%- JSON.stringify(subGames) %>'>
+            <!-- El tablero principal se generará con JavaScript -->
+        </div>
+
+        <div class="game-controls">
+            <div class="current-player">
+                Jugador actual: <span id="current-player">X</span>
+            </div>
+            <div class="moves-count">
+                Movimientos: <span id="moves-count"><%= moves.length %></span>
+            </div>
+        </div>
+
+        <div id="game-message" class="game-message"></div>
+    </div>
+
+    <!-- CORREGIDO: usa /js/game.js en lugar de /game.js -->
+    <script src="/js/game.js"></script>
+</body>
+</html>

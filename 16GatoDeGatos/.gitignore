@@ -1,0 +1,15 @@
+# Dependencias
+node_modules/
+
+# Archivos de build
+dist/
+build/
+
+# Archivos de sistema
+.DS_Store
+
+# Archivos de configuración local
+.env
+
+# Logs
+*.log

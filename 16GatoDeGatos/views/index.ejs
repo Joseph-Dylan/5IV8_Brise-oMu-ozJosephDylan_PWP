@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ultimate Tic Tac Toe</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Ultimate Tic Tac Toe</h1>
+        
+        <div class="actions">
+            <form action="/games" method="POST">
+                <button type="submit" class="btn btn-primary">Nuevo Juego</button>
+            </form>
+        </div>
+
+        <div class="games-list">
+            <h2>Juegos Guardados</h2>
+            <% if (games.length === 0) { %>
+                <p>No hay juegos guardados</p>
+            <% } else { %>
+                <table class="games-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Fecha</th>
+                            <th>Movimientos</th>
+                            <th>Sub-juegos Completados</th>
+                            <th>Ganador</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% games.forEach(game => { %>
+                            <tr>
+                                <td><%= game.id %></td>
+                                <td><%= new Date(game.created_at).toLocaleDateString() %></td>
+                                <td><%= game.total_moves %></td>
+                                <td><%= game.completed_sub_games %>/9</td>
+                                <td><%= game.winner || 'En juego' %></td>
+                                <td>
+                                    <span class="status <%= game.completed ? 'completed' : 'in-progress' %>">
+                                        <%= game.completed ? 'Completado' : 'En progreso' %>
+                                    </span>
+                                </td>
+                                <td class="actions">
+                                    <a href="/game/<%= game.id %>" class="btn btn-small">Continuar</a>
+                                    <a href="/games/delete/<%= game.id %>" class="btn btn-small btn-danger" 
+                                       onclick="return confirm('¿Eliminar este juego?')">Eliminar</a>
+                                </td>
+                            </tr>
+                        <% }); %>
+                    </tbody>
+                </table>
+            <% } %>
+        </div>
+    </div>
+</body>
+</html>
