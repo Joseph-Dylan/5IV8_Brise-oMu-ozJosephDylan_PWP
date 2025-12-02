@@ -1,0 +1,13 @@
+{
+  "scrips": {
+    "start": "nodemon backend/server.js"
+  },
+  "type": "module",
+  "dependencies": {
+    "dotenv": "^17.2.3",
+    "ejs": "^3.1.10",
+    "express": "^5.2.1",
+    "mysql2": "^3.15.3",
+    "path": "^0.12.7"
+  }
+}
