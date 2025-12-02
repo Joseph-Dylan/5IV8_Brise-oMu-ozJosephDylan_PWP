@@ -29,3 +29,5 @@ config.getConnection((err) => {
     console.log('Conexión exitosa.');
     connection.release();
 });
+
+export default config;
