@@ -1,9 +1,23 @@
 class UltimateTicTacToe {
     constructor(containerElement) {
+        console.log('Datos del juego recibidos:', {
+            gameId: containerElement.dataset.gameId,
+            playerX: containerElement.dataset.playerX,
+            playerO: containerElement.dataset.playerO,
+            playerXScore: containerElement.dataset.playerXScore,
+            playerOScore: containerElement.dataset.playerOScore
+        });
+        
         this.container = containerElement;
         this.gameId = parseInt(containerElement.dataset.gameId);
         this.completed = containerElement.dataset.completed === 'true';
         this.winner = containerElement.dataset.winner || '';
+        
+        this.playerXName = containerElement.dataset.playerX || 'Jugador X';
+        this.playerOName = containerElement.dataset.playerO || 'Jugador O';
+        this.playerXScore = parseInt(containerElement.dataset.playerXScore) || 0;
+        this.playerOScore = parseInt(containerElement.dataset.playerOScore) || 0;
+        
         this.moves = JSON.parse(containerElement.dataset.moves || '[]');
         this.subGames = JSON.parse(containerElement.dataset.subGames || '[]');
         
@@ -14,6 +28,7 @@ class UltimateTicTacToe {
         this.initializeGame();
         this.renderBoard();
         this.updateGameInfo();
+        this.updateScores();
     }
     
     initializeBoard() {
@@ -29,17 +44,15 @@ class UltimateTicTacToe {
     }
     
     initializeGame() {
-        // Aplicar movimientos guardados
         this.moves.forEach(move => {
             this.makeMove(
                 move.main_board_position,
                 move.sub_board_position,
                 move.player,
-                false // No guardar en BD
+                false
             );
         });
         
-        // Determinar siguiente jugador
         if (this.moves.length > 0) {
             const lastMove = this.moves[this.moves.length - 1];
             this.currentPlayer = lastMove.player === 'X' ? 'O' : 'X';
@@ -74,8 +87,6 @@ class UltimateTicTacToe {
                     subCell.classList.add(value.toLowerCase());
                 }
                 
-                // MODIFICADO: Todas las celdas son jugables si el juego no ha terminado
-                // y la celda está vacía y el sub-tablero principal no está ganado
                 if (!this.completed && 
                     this.board[mainPos][subPos] === '' && 
                     this.mainBoard[mainPos] === '') {
@@ -96,7 +107,7 @@ class UltimateTicTacToe {
     handleCellClick(mainPos, subPos) {
         if (this.completed) return;
         if (this.board[mainPos][subPos] !== '') return;
-        if (this.mainBoard[mainPos] !== '') return; // Sub-tablero ya ganado
+        if (this.mainBoard[mainPos] !== '') return;
         
         this.makeMove(mainPos, subPos, this.currentPlayer, true);
     }
@@ -129,16 +140,10 @@ class UltimateTicTacToe {
             }
         }
         
-        // Verificar si se ganó el sub-tablero
         this.checkSubGameWinner(mainPos);
         
-        // MODIFICADO: No hay restricciones para el siguiente movimiento
-        // Los jugadores pueden jugar en cualquier sub-tablero disponible
-        
-        // Cambiar jugador
         this.currentPlayer = this.currentPlayer === 'X' ? 'O' : 'X';
         
-        // Verificar si se ganó el juego principal
         this.checkMainGameWinner();
         
         this.renderBoard();
@@ -152,63 +157,108 @@ class UltimateTicTacToe {
         if (winner && !this.mainBoard[mainPos]) {
             this.mainBoard[mainPos] = winner;
             
-            // Guardar en base de datos
-            if (!this.completed) {
-                fetch(`/game/${this.gameId}/subgame`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        subBoard: mainPos,
-                        winner: winner
-                    })
-                });
+            const alreadyWon = this.subGames.some(subGame => 
+                subGame.sub_board_position === mainPos && subGame.completed
+            );
+            
+            if (!alreadyWon) {
+                if (winner === 'X') {
+                    this.playerXScore += 1;
+                    console.log(`${this.playerXName} gana 1 punto! Total: ${this.playerXScore}`);
+                } else if (winner === 'O') {
+                    this.playerOScore += 1;
+                    console.log(`${this.playerOName} gana 1 punto! Total: ${this.playerOScore}`);
+                }
+                
+                const winnerName = winner === 'X' ? this.playerXName : this.playerOName;
+                this.showMessage(`${winnerName} gana un sub-juego! (+1 punto)`, `winner-${winner.toLowerCase()}`);
+                
+                if (!this.completed) {
+                    fetch(`/game/${this.gameId}/subgame`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            subBoard: mainPos,
+                            winner: winner
+                        })
+                    });
+                    
+                    fetch(`/game/${this.gameId}/update-score`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            player: winner,
+                            score: winner === 'X' ? this.playerXScore : this.playerOScore
+                        })
+                    });
+                    
+                    this.updateScores();
+                }
             }
         }
     }
     
     checkMainGameWinner() {
-    const winner = this.getWinner(this.mainBoard);
-    if (winner && !this.completed) {
-        this.completed = true;
-        this.winner = winner;
+        const winner = this.getWinner(this.mainBoard);
+        if (winner && !this.completed) {
+            this.completed = true;
+            this.winner = winner === 'X' ? this.playerXName : this.playerOName;
+            
+            if (winner === 'X') {
+                this.playerXScore += 5;
+            } else if (winner === 'O') {
+                this.playerOScore += 5;
+            }
+            
+            fetch(`/game/${this.gameId}/finish`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    winner: this.winner,
+                    playerXScore: this.playerXScore,
+                    playerOScore: this.playerOScore
+                })
+            });
+            
+            const winnerName = winner === 'X' ? this.playerXName : this.playerOName;
+            this.showMessage(`¡${winnerName} gana el juego!`, `winner-${winner.toLowerCase()}`, true);
+            
+        } else if (this.isMainBoardFull() && !this.completed) {
+            this.completed = true;
+            this.winner = 'Draw';
+            
+            this.playerXScore += 2;
+            this.playerOScore += 2;
+            
+            fetch(`/game/${this.gameId}/finish`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    winner: 'Draw',
+                    playerXScore: this.playerXScore,
+                    playerOScore: this.playerOScore
+                })
+            });
+            
+            this.showMessage(`¡Empate! ${this.playerXName} y ${this.playerOName} ganan puntos`, 'winner-draw', true);
+        }
         
-        fetch(`/game/${this.gameId}/finish`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                winner: winner
-            })
-        });
-        
-        this.showMessage(`¡GANADOR: ${winner}!`, `winner-${winner.toLowerCase()}`, true);
-        
-    } else if (this.isMainBoardFull() && !this.completed) {
-        this.completed = true;
-        this.winner = 'Draw';
-        
-        fetch(`/game/${this.gameId}/finish`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                winner: 'Draw'
-            })
-        });
-        
-        this.showMessage('¡EMPATE!', 'winner-draw', true);
+        this.updateScores();
     }
-}
     
     getWinner(board) {
         const lines = [
-            [0, 1, 2], [3, 4, 5], [6, 7, 8], // Filas
-            [0, 3, 6], [1, 4, 7], [2, 5, 8], // Columnas
-            [0, 4, 8], [2, 4, 6]             // Diagonales
+            [0, 1, 2], [3, 4, 5], [6, 7, 8],
+            [0, 3, 6], [1, 4, 7], [2, 5, 8],
+            [0, 4, 8], [2, 4, 6]
         ];
         
         for (let line of lines) {
@@ -230,16 +280,36 @@ class UltimateTicTacToe {
     }
     
     updateGameInfo() {
-        const currentPlayerEl = document.getElementById('current-player');
-        const movesCountEl = document.getElementById('moves-count');
+        const currentPlayerNameEl = document.getElementById('current-player-name');
+        const currentPlayerSymbolEl = document.getElementById('current-player-symbol');
         
-        if (currentPlayerEl) {
-            currentPlayerEl.textContent = this.currentPlayer;
-            currentPlayerEl.style.color = this.currentPlayer === 'X' ? '#e74c3c' : '#3498db';
+        if (currentPlayerNameEl) {
+            const currentPlayerName = this.currentPlayer === 'X' ? this.playerXName : this.playerOName;
+            currentPlayerNameEl.textContent = currentPlayerName;
+            currentPlayerNameEl.style.color = this.currentPlayer === 'X' ? 'rgb(200, 0, 0)' : 'rgb(0, 0, 200)';
         }
         
+        if (currentPlayerSymbolEl) {
+            currentPlayerSymbolEl.textContent = this.currentPlayer;
+            currentPlayerSymbolEl.style.color = this.currentPlayer === 'X' ? 'rgb(200, 0, 0)' : 'rgb(0, 0, 200)';
+        }
+        
+        const movesCountEl = document.getElementById('moves-count');
         if (movesCountEl) {
             movesCountEl.textContent = this.moves.length + (this.moves.length === this.moves.length ? 0 : 1);
+        }
+    }
+    
+    updateScores() {
+        const playerXScoreEl = document.getElementById('player-x-score');
+        const playerOScoreEl = document.getElementById('player-o-score');
+        
+        if (playerXScoreEl) {
+            playerXScoreEl.textContent = `${this.playerXScore} puntos`;
+        }
+        
+        if (playerOScoreEl) {
+            playerOScoreEl.textContent = `${this.playerOScore} puntos`;
         }
     }
     
@@ -251,7 +321,6 @@ class UltimateTicTacToe {
             messageEl.style.display = 'block';
             
             if (isFinal) {
-                // Crear banner final superpuesto
                 this.createFinalBanner(message, type);
             }
             
@@ -262,9 +331,8 @@ class UltimateTicTacToe {
             }
         }
     }
-
+    
     createFinalBanner(message, type) {
-        // Remover banner anterior si existe
         const existingBanner = document.querySelector('.final-result-banner');
         if (existingBanner) {
             existingBanner.remove();
@@ -272,10 +340,20 @@ class UltimateTicTacToe {
         
         const banner = document.createElement('div');
         banner.className = `final-result-banner ${type}`;
-        banner.textContent = message;
+        
+        let winnerSymbol = '';
+        if (type === 'winner-x') winnerSymbol = '❌';
+        if (type === 'winner-o') winnerSymbol = '⭕';
+        if (type === 'winner-draw') winnerSymbol = '🤝';
+        
         banner.innerHTML = `
-            <div>${message}</div>
-            <div style="font-size: 18px; margin-top: 20px; opacity: 0.9;">Juego Terminado</div>
+            <div style="font-size: 36px; margin-bottom: 15px;">🏆 ${winnerSymbol}</div>
+            <div style="font-size: 24px; font-weight: bold;">${message}</div>
+            <div style="font-size: 18px; margin-top: 15px; background: rgba(255,255,255,0.2); padding: 10px; border-radius: 5px;">
+                Puntuación final:<br>
+                <strong>${this.playerXName}</strong>: ${this.playerXScore} puntos<br>
+                <strong>${this.playerOName}</strong>: ${this.playerOScore} puntos
+            </div>
         `;
         
         banner.addEventListener('click', () => {
@@ -286,7 +364,6 @@ class UltimateTicTacToe {
     }
 }
 
-// Inicializar el juego cuando se cargue la página
 document.addEventListener('DOMContentLoaded', () => {
     const boardContainer = document.getElementById('ultimate-board');
     if (boardContainer) {

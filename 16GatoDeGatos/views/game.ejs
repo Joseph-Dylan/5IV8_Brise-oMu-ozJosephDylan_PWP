@@ -8,42 +8,50 @@
 </head>
 <body>
     <div class="container">
-        <header class="game-header">
+        <div class="game-header">
             <h1>Juego #<%= game.id %></h1>
             <div class="game-info">
                 <span class="status <%= game.completed ? 'completed' : 'in-progress' %>">
                     <%= game.completed ? 'Completado' : 'En progreso' %>
                 </span>
                 <% if (game.winner) { %>
-                    <span class="winner">Ganador: <%= game.winner %></span>
+                    <span class="winner winner-<%= game.winner.toLowerCase() %>">
+                        Ganador: <%= game.winner %>
+                    </span>
                 <% } %>
             </div>
             <a href="/" class="btn btn-secondary">Volver a Inicio</a>
-        </header>
+        </div>
 
-        <div class="game-info">
-            <span class="status <%= game.completed ? 'completed' : 'in-progress' %>">
-                <%= game.completed ? 'Completado' : 'En progreso' %>
-            </span>
-            <% if (game.winner) { %>
-                <span class="winner winner-<%= game.winner.toLowerCase() %>">
-                    Ganador: <%= game.winner %>
-                </span>
-            <% } %>
+        <div class="players-info">
+            <div class="player player-x">
+                <div class="player-name"><%= game.player_x_name %> (X)</div>
+                <div class="player-score" id="player-x-score"><%= game.player_x_score %> puntos</div>
+            </div>
+            
+            <div class="vs">VS</div>
+            
+            <div class="player player-o">
+                <div class="player-name"><%= game.player_o_name %> (O)</div>
+                <div class="player-score" id="player-o-score"><%= game.player_o_score %> puntos</div>
+            </div>
         </div>
 
         <div id="ultimate-board" class="ultimate-board"
              data-game-id="<%= game.id %>"
              data-completed="<%= game.completed %>"
              data-winner="<%= game.winner || '' %>"
+             data-player-x="<%= game.player_x_name %>"
+             data-player-o="<%= game.player_o_name %>"
+             data-player-x-score="<%= game.player_x_score %>"
+             data-player-o-score="<%= game.player_o_score %>"
              data-moves='<%- JSON.stringify(moves) %>'
              data-sub-games='<%- JSON.stringify(subGames) %>'>
-            <!-- El tablero principal se generará con JavaScript -->
         </div>
 
         <div class="game-controls">
             <div class="current-player">
-                Jugador actual: <span id="current-player">X</span>
+                Turno de: <span id="current-player-name"></span> (<span id="current-player-symbol">X</span>)
             </div>
             <div class="moves-count">
                 Movimientos: <span id="moves-count"><%= moves.length %></span>
@@ -53,7 +61,8 @@
         <div id="game-message" class="game-message"></div>
     </div>
 
-    <!-- CORREGIDO: usa /js/game.js en lugar de /game.js -->
+    <footer></footer>
+    
     <script src="/js/game.js"></script>
 </body>
 </html>

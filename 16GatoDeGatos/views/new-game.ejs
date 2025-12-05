@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nuevo Juego - Ultimate Tic Tac Toe</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="game-header">
+            <h1>Crear Nuevo Juego</h1>
+            <a href="/" class="btn btn-secondary">Volver</a>
+        </div>
+
+        <div class="form-container">
+            <form action="/games" method="POST" class="game-form">
+                <div class="form-group">
+                    <label for="playerXName">Nombre del Jugador X:</label>
+                    <input type="text" id="playerXName" name="playerXName" 
+                           placeholder="Jugador X" class="form-control">
+                </div>
+                
+                <div class="form-group">
+                    <label for="playerOName">Nombre del Jugador O:</label>
+                    <input type="text" id="playerOName" name="playerOName" 
+                           placeholder="Jugador O" class="form-control">
+                </div>
+                
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Crear Juego</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

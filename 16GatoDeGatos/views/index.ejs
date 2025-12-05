@@ -3,31 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ultimate Tic Tac Toe</title>
+    <title>Gato de Gatos</title>
     <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
     <div class="container">
-        <h1>Ultimate Tic Tac Toe</h1>
-        
-        <div class="actions">
-            <form action="/games" method="POST">
-                <button type="submit" class="btn btn-primary">Nuevo Juego</button>
-            </form>
+        <div class="game-header">
+            <h1>Gato de Gatos</h1>
+            <a href="/games/new" class="btn btn-primary">Nuevo Juego</a>
         </div>
 
         <div class="games-list">
             <h2>Juegos Guardados</h2>
             <% if (games.length === 0) { %>
-                <p>No hay juegos guardados</p>
+                <p class="no-games">No hay juegos guardados</p>
             <% } else { %>
                 <table class="games-table">
                     <thead>
                         <tr>
                             <th>ID</th>
                             <th>Fecha</th>
-                            <th>Movimientos</th>
-                            <th>Sub-juegos Completados</th>
+                            <th>Jugador X</th>
+                            <th>Jugador O</th>
+                            <th>Puntuación</th>
+                            <th>Subjuegos</th>
                             <th>Ganador</th>
                             <th>Estado</th>
                             <th>Acciones</th>
@@ -38,9 +37,30 @@
                             <tr>
                                 <td><%= game.id %></td>
                                 <td><%= new Date(game.created_at).toLocaleDateString() %></td>
-                                <td><%= game.total_moves %></td>
-                                <td><%= game.completed_sub_games %>/9</td>
-                                <td><%= game.winner || 'En juego' %></td>
+                                <td><%= game.player_x_name %></td>
+                                <td><%= game.player_o_name %></td>
+                                <td><%= game.player_x_score %> - <%= game.player_o_score %></td>
+                                <td><%= game.completed_sub_games || 0 %>/9</td>
+                                <td>
+                                    <% if (game.winner) { %>
+                                        <% 
+                                            // Determinar la clase CSS basada en el ganador
+                                            let winnerClass = '';
+                                            if (game.winner === game.player_x_name) {
+                                                winnerClass = 'winner-x';
+                                            } else if (game.winner === game.player_o_name) {
+                                                winnerClass = 'winner-o';
+                                            } else if (game.winner === 'Draw') {
+                                                winnerClass = 'winner-draw';
+                                            }
+                                        %>
+                                        <span class="winner <%= winnerClass %>">
+                                            <%= game.winner %>
+                                        </span>
+                                    <% } else { %>
+                                        En juego
+                                    <% } %>
+                                </td>
                                 <td>
                                     <span class="status <%= game.completed ? 'completed' : 'in-progress' %>">
                                         <%= game.completed ? 'Completado' : 'En progreso' %>
@@ -58,5 +78,7 @@
             <% } %>
         </div>
     </div>
+    
+    <footer></footer>
 </body>
 </html>

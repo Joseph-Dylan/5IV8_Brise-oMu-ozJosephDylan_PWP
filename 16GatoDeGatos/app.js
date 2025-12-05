@@ -9,7 +9,6 @@ require('dotenv').config({path: './.env'});
 const app = express();
 const port = 3000;
 
-// Configuración de mysql
 const bd = mysql.createConnection({
     host: process.env.BD_HOST,
     user: process.env.BD_USER,
@@ -25,7 +24,6 @@ bd.connect((err) => {
     console.log('Conexión exitosa a la base de datos ' + bd.threadId);
 });
 
-// Middleware
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.set('view engine', 'ejs');
@@ -34,9 +32,6 @@ app.set('views', path.join(__dirname, 'views'));
 app.use('/css', express.static(path.join(__dirname, 'css')));
 app.use('/js', express.static(path.join(__dirname, 'js')));
 
-app.use(express.static(path.join(__dirname, 'public')));
-
-// Ruta principal - Listar juegos
 app.get('/', (req, res) => {
     const query = `
         SELECT g.*, 
@@ -59,11 +54,23 @@ app.get('/', (req, res) => {
     });
 });
 
-// Ruta para crear un nuevo juego
+app.get('/games/new', (req, res) => {
+    res.render('new-game');
+});
+
 app.post('/games', (req, res) => {
-    const query = 'INSERT INTO games (winner, completed) VALUES (NULL, FALSE)';
+    const { playerXName, playerOName } = req.body;
     
-    bd.query(query, (err, results) => {
+    const query = `
+        INSERT INTO games 
+        (winner, completed, player_x_name, player_o_name, player_x_score, player_o_score) 
+        VALUES (NULL, FALSE, ?, ?, 0, 0)
+    `;
+    
+    bd.query(query, [
+        playerXName || 'Jugador X',
+        playerOName || 'Jugador O'
+    ], (err, results) => {
         if (err) {
             console.error('Error al crear el juego: ' + err);
             res.status(500).send('Error al crear el juego');
@@ -73,7 +80,6 @@ app.post('/games', (req, res) => {
     });
 });
 
-// Ruta para ver/continuar un juego específico
 app.get('/game/:id', (req, res) => {
     const gameId = req.params.id;
     
@@ -117,7 +123,6 @@ app.get('/game/:id', (req, res) => {
     });
 });
 
-// Ruta para hacer un movimiento
 app.post('/game/:id/move', (req, res) => {
     const gameId = req.params.id;
     const { mainBoard, subBoard, player } = req.body;
@@ -158,12 +163,10 @@ app.post('/game/:id/move', (req, res) => {
     });
 });
 
-// Ruta para actualizar un sub-juego
 app.post('/game/:id/subgame', (req, res) => {
     const gameId = req.params.id;
     const { subBoard, winner } = req.body;
     
-    // Verificar si el sub-juego ya existe
     const checkQuery = 'SELECT * FROM sub_games WHERE game_id = ? AND sub_board_position = ?';
     bd.query(checkQuery, [gameId, subBoard], (err, results) => {
         if (err) {
@@ -172,7 +175,6 @@ app.post('/game/:id/subgame', (req, res) => {
         }
         
         if (results.length > 0) {
-            // Actualizar sub-juego existente
             const updateQuery = `
                 UPDATE sub_games 
                 SET winner = ?, completed = TRUE 
@@ -186,7 +188,6 @@ app.post('/game/:id/subgame', (req, res) => {
                 res.json({ success: true });
             });
         } else {
-            // Crear nuevo sub-juego
             const insertQuery = `
                 INSERT INTO sub_games (game_id, sub_board_position, winner, completed) 
                 VALUES (?, ?, ?, TRUE)
@@ -202,22 +203,67 @@ app.post('/game/:id/subgame', (req, res) => {
     });
 });
 
-// Ruta para finalizar un juego
-app.post('/game/:id/finish', (req, res) => {
+app.post('/game/:id/update-score', (req, res) => {
     const gameId = req.params.id;
-    const { winner } = req.body;
+    const { player, score } = req.body;
     
-    const updateQuery = 'UPDATE games SET winner = ?, completed = TRUE WHERE id = ?';
-    bd.query(updateQuery, [winner, gameId], (err, results) => {
+    let query;
+    if (player === 'X') {
+        query = 'UPDATE games SET player_x_score = ? WHERE id = ?';
+    } else {
+        query = 'UPDATE games SET player_o_score = ? WHERE id = ?';
+    }
+    
+    bd.query(query, [score, gameId], (err, results) => {
         if (err) {
-            console.error('Error al finalizar el juego: ' + err);
-            return res.status(500).json({ error: 'Error al finalizar el juego' });
+            console.error('Error al actualizar puntuación: ' + err);
+            return res.status(500).json({ error: 'Error al actualizar puntuación' });
         }
         res.json({ success: true });
     });
 });
 
-// Ruta para eliminar un juego
+app.post('/game/:id/finish', (req, res) => {
+    const gameId = req.params.id;
+    const { winner, playerXScore, playerOScore } = req.body;
+    
+    const getPlayerQuery = 'SELECT player_x_name, player_o_name FROM games WHERE id = ?';
+    bd.query(getPlayerQuery, [gameId], (err, results) => {
+        if (err) {
+            console.error('Error al obtener nombres: ' + err);
+            return res.status(500).json({ error: 'Error al finalizar el juego' });
+        }
+        
+        let winnerToStore = winner;
+        
+        if (winner === 'X') {
+            winnerToStore = results[0].player_x_name;
+        } else if (winner === 'O') {
+            winnerToStore = results[0].player_o_name;
+        }
+        
+        const updateQuery = `
+            UPDATE games 
+            SET winner = ?, completed = TRUE, 
+                player_x_score = ?, player_o_score = ? 
+            WHERE id = ?
+        `;
+        
+        bd.query(updateQuery, [
+            winnerToStore, 
+            playerXScore || 0, 
+            playerOScore || 0, 
+            gameId
+        ], (err, results) => {
+            if (err) {
+                console.error('Error al finalizar el juego: ' + err);
+                return res.status(500).json({ error: 'Error al finalizar el juego' });
+            }
+            res.json({ success: true });
+        });
+    });
+});
+
 app.get('/games/delete/:id', (req, res) => {
     const gameId = req.params.id;
     const query = 'DELETE FROM games WHERE id = ?';
@@ -231,6 +277,78 @@ app.get('/games/delete/:id', (req, res) => {
     });
 });
 
+app.get('/api/game/:id', (req, res) => {
+    const gameId = req.params.id;
+    
+    const gameQuery = 'SELECT * FROM games WHERE id = ?';
+    const movesQuery = 'SELECT * FROM moves WHERE game_id = ? ORDER BY move_number ASC';
+    const subGamesQuery = 'SELECT * FROM sub_games WHERE game_id = ?';
+    
+    bd.query(gameQuery, [gameId], (err, gameResults) => {
+        if (err || gameResults.length === 0) {
+            res.status(404).json({ error: 'Juego no encontrado' });
+            return;
+        }
+        
+        bd.query(movesQuery, [gameId], (err, movesResults) => {
+            if (err) {
+                res.status(500).json({ error: 'Error al obtener movimientos' });
+                return;
+            }
+            
+            bd.query(subGamesQuery, [gameId], (err, subGamesResults) => {
+                if (err) {
+                    res.status(500).json({ error: 'Error al obtener sub-juegos' });
+                    return;
+                }
+                
+                res.json({
+                    game: gameResults[0],
+                    moves: movesResults,
+                    subGames: subGamesResults
+                });
+            });
+        });
+    });
+});
+
 app.listen(port, () => {
     console.log(`Servidor corriendo en http://localhost:${port}`);
 });
+
+/*
+create database GatoGatos;
+use GatoGatos;
+
+create table if not exists games (
+    id int auto_increment primary key,
+    created_at timestamp default current_timestamp,
+    winner varchar(50) null,
+    completed boolean default false,
+    player_x_name varchar(50) default 'Jugador X',
+    player_o_name varchar(50) default 'Jugador O',
+    player_x_score int default 0,
+    player_o_score int default 0
+);
+
+create table if not exists moves (
+    id int auto_increment primary key,
+    game_id int,
+    main_board_position int,
+    sub_board_position int,
+    player enum('X', 'O'),
+    move_number int,
+    created_at timestamp default current_timestamp,
+    foreign key (game_id) references games(id) on delete cascade
+);
+
+create table if not exists sub_games (
+    id int auto_increment primary key,
+    game_id int,
+    sub_board_position int,
+    winner enum('X', 'O', 'Draw') null,
+    completed boolean default false,
+    foreign key (game_id) references games(id) on delete cascade
+);
+ 
+*/
